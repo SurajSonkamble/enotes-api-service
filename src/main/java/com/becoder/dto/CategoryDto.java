@@ -1,22 +1,22 @@
-package com.becoder.entity;
+package com.becoder.dto;
 
+import java.sql.Date;
 
-
-import java.util.Date;
-
-import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@MappedSuperclass
-public class BaseModel {
+public class CategoryDto {
 
+	private Integer id;
+	private String name;
+	private String description;
 	private Boolean isActive;
-	private Boolean isDeleted;
 	private Integer createdBy;
 	private Date CreatedOn;
 	private Integer updatedBy;
