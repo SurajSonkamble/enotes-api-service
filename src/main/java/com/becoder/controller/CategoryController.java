@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.becoder.dto.CategoryDto;
 import com.becoder.dto.CategoryResponse;
 import com.becoder.entity.Category;
+import com.becoder.exception.ResourceNotFoundException;
 import com.becoder.service.CategoryService;
 
 @RestController
@@ -44,6 +45,9 @@ public class CategoryController {
 
 	@GetMapping("/category")
 	public ResponseEntity<?> getAllCategory() {
+
+		String nm = null;
+		nm.toUpperCase();
 
 		List<CategoryDto> allCategory = categoryService.getAllCategory();
 
@@ -75,7 +79,7 @@ public class CategoryController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) {
+	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws Exception {
 
 		CategoryDto categoryDto = categoryService.getCategoryById(id);
 
@@ -83,11 +87,10 @@ public class CategoryController {
 
 			return new ResponseEntity<>("Category Not found with id " + id, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(categoryDto, HttpStatus.OK);
 
+		return new ResponseEntity<>(categoryDto, HttpStatus.OK);
 	}
-	
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteCategoryById(@PathVariable Integer id) {
 
@@ -100,8 +103,5 @@ public class CategoryController {
 		return new ResponseEntity<>("Categoery not deletd", HttpStatus.INTERNAL_SERVER_ERROR);
 
 	}
-	
-	
-	
 
 }
