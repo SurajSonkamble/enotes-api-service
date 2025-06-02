@@ -12,46 +12,56 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.becoder.Util.CommonUtil;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<?> handleNullPointException(Exception e) {
 
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		// return new ResponseEntity<>(e.getMessage(),
+		// HttpStatus.INTERNAL_SERVER_ERROR);
+
+		return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> handleResourceNotFoundException(Exception e) {
 
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		// return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+		return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.NOT_FOUND);
 
 	}
-	
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 
 		List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
-		
-		
+
 		Map<String, Object> error = new LinkedHashMap<>();
-		allErrors.stream().forEach(er->{
+		allErrors.stream().forEach(er -> {
 			String msg = er.getDefaultMessage();
-			
+
 			String field = ((FieldError) (er)).getField();
 			error.put(field, msg);
-			
-			
+
 		});
-		
-		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+
+		// return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+
+		return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.BAD_REQUEST);
 
 	}
-	
+
 	@ExceptionHandler(ExistDataException.class)
-	public ResponseEntity<?> handleExistDataException(ExistDataException e){
-		
-		return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+	public ResponseEntity<?> handleExistDataException(ExistDataException e) {
+
+		// return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+
+		return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.CONFLICT);
 	}
 
 }
