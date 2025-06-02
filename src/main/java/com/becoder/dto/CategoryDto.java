@@ -2,6 +2,9 @@ package com.becoder.dto;
 
 import java.sql.Date;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +17,9 @@ import lombok.Setter;
 public class CategoryDto {
 
 	private Integer id;
+
 	private String name;
+
 	private String description;
 	private Boolean isActive;
 	private Integer createdBy;

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.becoder.dto.CategoryDto;
 import com.becoder.dto.CategoryResponse;
-import com.becoder.entity.Category;
-import com.becoder.exception.ResourceNotFoundException;
 import com.becoder.service.CategoryService;
 
 @RestController
@@ -29,7 +27,7 @@ public class CategoryController {
 	private CategoryService categoryService;
 
 	@PostMapping("/save")
-	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) {
+	public ResponseEntity<?> saveCategory( @RequestBody CategoryDto categoryDto) {
 
 		Boolean saveCategory = categoryService.saveCategory(categoryDto);
 
@@ -46,8 +44,7 @@ public class CategoryController {
 	@GetMapping("/category")
 	public ResponseEntity<?> getAllCategory() {
 
-		String nm = null;
-		nm.toUpperCase();
+		
 
 		List<CategoryDto> allCategory = categoryService.getAllCategory();
 
