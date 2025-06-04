@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import com.becoder.Util.CommonUtil;
 
@@ -62,6 +64,19 @@ public class GlobalExceptionHandler {
 		// return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
 
 		return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ResponseEntity<?> handleMissingServletRequestParameterException(MissingServletRequestParameterException e){
+		
+		return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@ExceptionHandler(MissingServletRequestPartException.class)
+	public ResponseEntity<?> handleMissingServletRequestPartException(Exception e){
+		
+		return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 }
