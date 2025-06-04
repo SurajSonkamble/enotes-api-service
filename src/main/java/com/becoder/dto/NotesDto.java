@@ -26,19 +26,35 @@ public class NotesDto {
 	private Date CreatedOn;
 	private Integer updatedBy;
 	private Date updatedOn;
-	
-	
+
+	private FilesDto fileDetails;
+
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Getter
+	@Setter
+	public static class FilesDto {
+
+		private Integer id;
+
+		private String originalFileName;
+
+		private String displayFileName;
+
+		
+
+	}
+
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Getter
 	@Setter
 	public static class CategoryDto {
-		
+
 		private Integer id;
 
 		private String name;
 
-		
 	}
 
 }
