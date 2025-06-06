@@ -12,11 +12,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StreamUtils;
@@ -24,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.becoder.dto.NotesDto;
 import com.becoder.dto.NotesDto.CategoryDto;
+import com.becoder.dto.NotesResponse;
 import com.becoder.entity.Category;
 import com.becoder.entity.FileDetails;
 import com.becoder.entity.Notes;
@@ -158,5 +163,31 @@ public class NotesServiceImpl implements NotesService {
 
 		return fileDtls;
 	}
+
+	@Override
+	public NotesResponse getAllNotesByUser(Integer userId,Integer pageNo, Integer pageSize) {
+		
+		Pageable pageable = PageRequest.of(pageNo,pageSize);
+		
+		 Page<Notes> pageNotes =  notesRepo.findByCreatedBy(userId,pageable);
+		 
+		List<Notes> notesDto = pageNotes.get().map(n -> mapper.map(n, Notes.class)).toList();
+		 
+	NotesResponse notes = NotesResponse.builder()
+			
+			.pageNo(pageNotes.getNumber())
+			.pageSize(pageNotes.getSize())
+			.totalElements(pageNotes.getTotalElements())
+			.totalPages(pageNotes.getTotalPages())
+			.isFirst(pageNotes.isFirst())
+			.isLast(pageNotes.isLast())
+			
+			
+			.build();
+		
+		return notes;
+	}
+	
+	
 
 }
