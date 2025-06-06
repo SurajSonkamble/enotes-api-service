@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.becoder.dto.NotesDto;
 import com.becoder.dto.NotesResponse;
 import com.becoder.entity.FileDetails;
-import com.becoder.exception.ResourceNotFoundException;
 
 public interface NotesService {
 	
@@ -20,6 +19,12 @@ public interface NotesService {
 
 	public FileDetails getFileDetails(Integer id) throws Exception;
 
-	public NotesResponse getAllNotesByUser(Integer userId, Integer pageNo, Integer pageSize); 
+	public NotesResponse getAllNotesByUser(Integer userId, Integer pageNo, Integer pageSize);
+
+	public void softDeleteNotes(Integer id) throws Exception;
+
+	public void restoreNotes(Integer id) throws Exception;
+
+	public List<NotesDto> getUserRecycleBinNotes(Integer userId);
 
 }
