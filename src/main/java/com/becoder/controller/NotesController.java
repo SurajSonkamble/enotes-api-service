@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.becoder.Util.CommonUtil;
 import com.becoder.dto.NotesDto;
+import com.becoder.dto.NotesResponse;
 import com.becoder.entity.FileDetails;
 import com.becoder.service.NotesService;
 
@@ -78,5 +79,26 @@ public class NotesController {
 		return CommonUtil.createBuildResponse(allNotes, HttpStatus.OK);
 
 	}
+	
+	
+	@GetMapping("/user-notes")
+	public ResponseEntity<?> getAllNotesByUser(@RequestParam(name="pageNo", defaultValue = "0") Integer pageNo,
+	@RequestParam(name="pageSize", defaultValue = "10") Integer pageSize) {
+		
+		
+		
+		Integer userId = 2;
+
+		NotesResponse allNotes = notesService.getAllNotesByUser(userId,pageNo,pageSize);
+
+//		if (CollectionUtils.isEmpty(allNotes)) {
+//
+//			return ResponseEntity.noContent().build();
+//		}
+
+		return CommonUtil.createBuildResponse(allNotes, HttpStatus.OK);
+
+	}
+
 
 }
